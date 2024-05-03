@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    /* You can add custom styles here */
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m6 offset-m3">
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">Login</span>
+            <form id="loginForm">
+              <div class="input-field">
+                <i class="material-icons prefix">email</i>
+                <input type="email" name="email" id="email" required>
+                <label for="email">Email</label>
+              </div>
+              <div class="input-field">
+                <i class="material-icons prefix">lock</i>
+                <input type="password" name="password" id="password" required>
+                <label for="password">Password</label>
+              </div>
+              <button type="submit" class="btn waves-effect waves-light">Login</button>
+            </form>
+            <div> <a href="/register.html" class="btn waves-effect waves-light">Register Here</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() { // Ensure DOM is ready
+  const loginForm = document.getElementById('loginForm');
+
+  loginForm.addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+
+    // Send data to server for login processing (using Fetch API here)
+    fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }) 
+    })
+    .then(response => {
+        // Handle successful login (e.g., redirect)
+        console.log('Login success:', response); 
+        if (response.ok) {
+            window.location.href = '/profile.html'; // Replace '/profile' with the success destination
+        } else {
+            throw new Error('Login failed'); // Handle errors gracefully
+        }
+    })
+    .catch(error => {
+        // Handle login errors (e.g., display error messages)
+        console.error('Login error:', error); 
+        alert("Login failed. Please check your credentials."); // Replace with better UI feedback
+    });
+  });
+});
+  </script> 
+</body>
+</html>
